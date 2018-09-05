@@ -2,6 +2,33 @@
 'use strict';
 
 const EmberApp = require('ember-cli/lib/broccoli/ember-app');
+const Filter = require('broccoli-filter');
+
+
+
+function MyFilter(inputNode) {
+  Filter.call(this, inputNode);
+}
+
+MyFilter.prototype = Object.create(Filter.prototype);
+
+MyFilter.prototype.processString = function(existingString) {
+  return `
+  /**
+    * vendor.js
+    *
+    * (c) 2016 ������� All Rights Reserved
+    * generated at: 2016-12-06T19:20:23.171Z
+    !*
+    ${existingString}
+  `;
+};
+
+MyFilter.prototype.extensions = ['css', 'js'];
+// MyFilter.prototype.targetExtension = 'js';
+
+
+
 
 module.exports = function(defaults) {
   let app = new EmberApp(defaults, {
@@ -21,5 +48,5 @@ module.exports = function(defaults) {
   // please specify an object with the list of modules as keys
   // along with the exports of each module as its value.
 
-  return app.toTree();
+  return new MyFilter(app.toTree());
 };

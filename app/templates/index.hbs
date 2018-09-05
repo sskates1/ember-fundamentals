@@ -1,0 +1,9 @@
+<!-- {{outlet}} -->
+
+<ul>
+  {{#each model as |course|}}
+    <li>
+      {{link-to course.title 'course' course.slug}}
+    </li>
+  {{/each}}
+</ul>
